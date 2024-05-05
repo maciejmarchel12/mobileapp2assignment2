@@ -1,9 +1,12 @@
 package com.example.historicallandmarkdonation.models
 
 import android.os.Parcelable
+import com.google.gson.annotations.SerializedName
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
-class DonationModel(var id: Long = 0,
-                    val paymentmethod: String = "N/A",
-                    val amount: Int = 0) : Parcelable
+data class DonationModel(var _id: String = "N/A",
+                         @SerializedName("paymenttype")
+                         val paymentmethod: String = "N/A",
+                         val message: String = "n/a",
+                         val amount: Int = 0) : Parcelable

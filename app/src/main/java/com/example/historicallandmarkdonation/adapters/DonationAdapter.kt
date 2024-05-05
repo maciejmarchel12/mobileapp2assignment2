@@ -11,7 +11,7 @@ interface DonationClickListener {
     fun onDonationClick(donation: DonationModel)
 }
 
-class DonationAdapter constructor(private var donations: List<DonationModel>,
+class DonationAdapter constructor(private var donations: ArrayList<DonationModel>,
                                   private val listener: DonationClickListener)
     : RecyclerView.Adapter<DonationAdapter.MainHolder>() {
 
@@ -27,6 +27,12 @@ class DonationAdapter constructor(private var donations: List<DonationModel>,
         holder.bind(donation,listener)
     }
 
+    fun removeAt(position: Int) {
+        donations.removeAt(position)
+        notifyItemRemoved(position)
+    }
+
+
     override fun getItemCount(): Int = donations.size
 
     inner class MainHolder(val binding : CardDonationBinding) : RecyclerView.ViewHolder(binding.root) {
@@ -35,6 +41,7 @@ class DonationAdapter constructor(private var donations: List<DonationModel>,
 //            binding.paymentamount.text = donation.amount.toString()
 //            binding.paymentmethod.text = donation.paymentmethod
 
+            binding.root.tag = donation._id
             binding.donation = donation
             binding.imageIcon.setImageResource(R.mipmap.ic_launcher_round)
             binding.root.setOnClickListener { listener.onDonationClick(donation) }
