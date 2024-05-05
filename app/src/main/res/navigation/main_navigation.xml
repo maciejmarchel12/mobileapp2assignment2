@@ -47,6 +47,6 @@
             app:destination="@id/reportFragment" />
         <argument
             android:name="donationid"
-            app:argType="long" />
+            app:argType="string" />
     </fragment>
 </navigation>

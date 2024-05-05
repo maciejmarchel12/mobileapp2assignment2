@@ -132,9 +132,9 @@ class DonateFragment : Fragment() {
         super.onResume()
         val reportViewModel = ViewModelProvider(this).get(ReportViewModel::class.java)
         reportViewModel.observableDonationsList.observe(viewLifecycleOwner, Observer {
-            totalDonated = reportViewModel.observableDonationsList.value!!.sumOf { it.amount }
+            totalDonated = reportViewModel.observableDonationsList.value!!.sumBy { it.amount }
+            fragBinding.progressBar.progress = totalDonated
+            fragBinding.totalSoFar.text = getString(R.string.total_donated,totalDonated)
         })
-        fragBinding.progressBar.progress = totalDonated
-        fragBinding.totalSoFar.text = getString(R.string.total_donated,totalDonated)
     }
 }
