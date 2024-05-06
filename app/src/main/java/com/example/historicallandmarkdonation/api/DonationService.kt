@@ -11,19 +11,28 @@ import retrofit2.http.Path
 
 interface DonationService {
     @GET("/donations")
-    fun getall(): Call<List<DonationModel>>
+    fun findall(): Call<List<DonationModel>>
 
-    @GET("/donations/{id}")
-    fun get(@Path("id") id: String): Call<DonationModel>
+    @GET("/donations/{email}")
+    fun findall(@Path("email") email: String?)
+            : Call<List<DonationModel>>
 
-    @DELETE("/donations/{id}")
-    fun delete(@Path("id") id: String): Call<DonationWrapper>
+    @GET("/donations/{email}/{id}")
+    fun get(@Path("email") email: String?,
+            @Path("id") id: String): Call<DonationModel>
 
-    @POST("/donations")
-    fun post(@Body donation: DonationModel): Call<DonationWrapper>
+    @DELETE("/donations/{email}/{id}")
+    fun delete(@Path("email") email: String?,
+               @Path("id") id: String): Call<DonationWrapper>
 
-    @PUT("/donations/{id}")
-    fun put(@Path("id") id: String,
+    @POST("/donations/{email}")
+    fun post(@Path("email") email: String?,
+             @Body donation: DonationModel)
+            : Call<DonationWrapper>
+
+    @PUT("/donations/{email}/{id}")
+    fun put(@Path("email") email: String?,
+            @Path("id") id: String,
             @Body donation: DonationModel
     ): Call<DonationWrapper>
 }

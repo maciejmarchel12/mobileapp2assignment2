@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.historicallandmarkdonation.models.DonationManager
 import com.example.historicallandmarkdonation.models.DonationModel
+import com.google.firebase.auth.FirebaseUser
 import timber.log.Timber
 
 class ReportViewModel : ViewModel() {
@@ -15,25 +16,27 @@ class ReportViewModel : ViewModel() {
     val observableDonationsList: LiveData<List<DonationModel>>
         get() = donationsList
 
+    var liveFirebaseUser = MutableLiveData<FirebaseUser>()
+
     init { load() }
 
     fun load() {
         try {
-            DonationManager.findAll(donationsList)
-            Timber.i("Retrofit Load Success : $donationsList.value")
+            DonationManager.findAll(liveFirebaseUser.value?.email!!, donationsList)
+            Timber.i("Report Load Success : ${donationsList.value.toString()}")
         }
         catch (e: Exception) {
-            Timber.i("Retrofit Load Error : $e.message")
+            Timber.i("Report Load Error : $e.message")
         }
     }
 
-    fun delete(id: String) {
+    fun delete(email: String, id: String) {
         try {
-            DonationManager.delete(id)
-            Timber.i("Retrofit Delete Success")
+            DonationManager.delete(email,id)
+            Timber.i("Report Delete Success")
         }
         catch (e: Exception) {
-            Timber.i("Retrofit Delete Error : $e.message")
+            Timber.i("Report Delete Error : $e.message")
         }
     }
 }

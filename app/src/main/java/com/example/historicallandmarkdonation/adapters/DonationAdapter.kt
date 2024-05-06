@@ -41,7 +41,7 @@ class DonationAdapter constructor(private var donations: ArrayList<DonationModel
 //            binding.paymentamount.text = donation.amount.toString()
 //            binding.paymentmethod.text = donation.paymentmethod
 
-            binding.root.tag = donation._id
+            binding.root.tag = donation
             binding.donation = donation
             binding.imageIcon.setImageResource(R.mipmap.ic_launcher_round)
             binding.root.setOnClickListener { listener.onDonationClick(donation) }
