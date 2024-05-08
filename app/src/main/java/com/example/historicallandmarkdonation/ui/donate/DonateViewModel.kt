@@ -3,8 +3,9 @@ package com.example.historicallandmarkdonation.ui.donate
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.historicallandmarkdonation.models.DonationManager
+import com.example.historicallandmarkdonation.firebase.FirebaseDBManager
 import com.example.historicallandmarkdonation.models.DonationModel
+import com.google.firebase.auth.FirebaseUser
 
 class DonateViewModel : ViewModel() {
 
@@ -13,9 +14,11 @@ class DonateViewModel : ViewModel() {
     val observableStatus: LiveData<Boolean>
         get() = status
 
-    fun addDonation(donation: DonationModel) {
+    fun addDonation(firebaseUser: MutableLiveData<FirebaseUser>,
+                    donation: DonationModel) {
         status.value = try {
-            DonationManager.create(donation)
+            //DonationManager.create(donation)
+            FirebaseDBManager.create(firebaseUser,donation)
             true
         } catch (e: IllegalArgumentException) {
             false

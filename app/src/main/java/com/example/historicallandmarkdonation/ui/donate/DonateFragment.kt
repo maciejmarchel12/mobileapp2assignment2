@@ -41,7 +41,6 @@ class DonateFragment : Fragment() {
                               savedInstanceState: Bundle?): View? {
         _fragBinding = FragmentDonateBinding.inflate(inflater, container, false)
         val root = fragBinding.root
-        // activity?.title = getString(R.string.action_donate)
         setupMenu()
         donateViewModel = ViewModelProvider(this).get(DonateViewModel::class.java)
         donateViewModel.observableStatus.observe(viewLifecycleOwner, Observer {
@@ -57,16 +56,9 @@ class DonateFragment : Fragment() {
             fragBinding.paymentAmount.setText("$newVal")
         }
         setButtonListener(fragBinding)
+
         return root;
     }
-
-//    companion object {
-//        @JvmStatic
-//        fun newInstance() =
-//                DonateFragment().apply {
-//                    arguments = Bundle().apply {}
-//                }
-//    }
 
     private fun render(status: Boolean) {
         when (status) {
@@ -89,10 +81,11 @@ class DonateFragment : Fragment() {
             else {
                 val paymentmethod = if(layout.paymentMethod.checkedRadioButtonId == R.id.Direct) "Direct" else "Paypal"
                 totalDonated += amount
-                layout.totalSoFar.text = getString(R.string.total_donated,totalDonated)
+                layout.totalSoFar.text = String.format(getString(R.string.totalSoFar),totalDonated)
                 layout.progressBar.progress = totalDonated
-                donateViewModel.addDonation(DonationModel(paymentmethod = paymentmethod, amount = amount, email = loggedInViewModel.liveFirebaseUser.value?.email!!))
-            }
+                donateViewModel.addDonation(loggedInViewModel.liveFirebaseUser,
+                    DonationModel(paymentmethod = paymentmethod,amount = amount,
+                        email = loggedInViewModel.liveFirebaseUser.value?.email!!)) }
         }
     }
 
@@ -113,19 +106,6 @@ class DonateFragment : Fragment() {
             }
         }, viewLifecycleOwner, Lifecycle.State.RESUMED)
     }
-//    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-//        inflater.inflate(R.menu.menu_donate, menu)
-//        super.onCreateOptionsMenu(menu, inflater)
-//    }
-//
-//    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-//        return NavigationUI.onNavDestinationSelected(item,
-//                requireView().findNavController()) || super.onOptionsItemSelected(item)
-//    }
-
-//    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-//        return item.onNavDestinationSelected(navController) || super.onOptionsItemSelected(item)
-//    }
 
     override fun onDestroyView() {
         super.onDestroyView()

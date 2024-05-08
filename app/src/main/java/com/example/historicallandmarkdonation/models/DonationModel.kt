@@ -1,15 +1,30 @@
 package com.example.historicallandmarkdonation.models
 
 import android.os.Parcelable
-import com.google.gson.annotations.SerializedName
+import com.google.firebase.database.Exclude
+import com.google.firebase.database.IgnoreExtraProperties
 import kotlinx.parcelize.Parcelize
 
+@IgnoreExtraProperties
 @Parcelize
 data class DonationModel(
-    val _id: String = "N/A",
-    @SerializedName("paymenttype")
-    val paymentmethod: String = "N/A",
-    var message: String = "n/a",
+    var uid: String? = "",
+    var paymentmethod: String = "N/A",
     var amount: Int = 0,
+    var message: String = "a message",
     var upvotes: Int = 0,
-    val email: String = "joe@bloggs.com") : Parcelable
+    var email: String? = "joe@bloggs.com")
+    : Parcelable
+{
+    @Exclude
+    fun toMap(): Map<String, Any?> {
+        return mapOf(
+            "uid" to uid,
+            "paymentmethod" to paymentmethod,
+            "amount" to amount,
+            "message" to message,
+            "upvotes" to upvotes,
+            "email" to email
+        )
+    }
+}

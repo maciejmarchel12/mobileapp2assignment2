@@ -3,6 +3,7 @@ package com.example.historicallandmarkdonation.models
 import androidx.lifecycle.MutableLiveData
 import com.example.historicallandmarkdonation.api.DonationClient
 import com.example.historicallandmarkdonation.api.DonationWrapper
+import com.google.firebase.auth.FirebaseUser
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -30,9 +31,9 @@ object DonationManager : DonationStore {
         })
     }
 
-    override fun findAll(email: String, donationsList: MutableLiveData<List<DonationModel>>) {
+    override fun findAll(uid: String, donationsList: MutableLiveData<List<DonationModel>>) {
 
-        val call = DonationClient.getApi().findall(email)
+        val call = DonationClient.getApi().findall(uid)
 
         call.enqueue(object : Callback<List<DonationModel>> {
             override fun onResponse(call: Call<List<DonationModel>>,
@@ -48,9 +49,9 @@ object DonationManager : DonationStore {
         })
     }
 
-    override fun findById(email: String, id: String, donation: MutableLiveData<DonationModel>)   {
+    override fun findById(uid: String, id: String, donation: MutableLiveData<DonationModel>)   {
 
-        val call = DonationClient.getApi().get(email,id)
+        val call = DonationClient.getApi().get(uid,id)
 
         call.enqueue(object : Callback<DonationModel> {
             override fun onResponse(call: Call<DonationModel>, response: Response<DonationModel>) {
@@ -64,7 +65,7 @@ object DonationManager : DonationStore {
         })
     }
 
-    override fun create( donation: DonationModel) {
+    override fun create(firebaseUser: MutableLiveData<FirebaseUser>, donation: DonationModel) {
 
         val call = DonationClient.getApi().post(donation.email,donation)
 
@@ -85,9 +86,9 @@ object DonationManager : DonationStore {
         })
     }
 
-    override fun delete(email: String,id: String) {
+    override fun delete(uid: String,id: String) {
 
-        val call = DonationClient.getApi().delete(email,id)
+        val call = DonationClient.getApi().delete(uid,id)
 
         call.enqueue(object : Callback<DonationWrapper> {
             override fun onResponse(call: Call<DonationWrapper>,
@@ -106,9 +107,9 @@ object DonationManager : DonationStore {
         })
     }
 
-    fun update(email: String,id: String, donation: DonationModel) {
+    override fun update(uid: String, id: String, donation: DonationModel) {
 
-        val call = DonationClient.getApi().put(email,id,donation)
+        val call = DonationClient.getApi().put(uid,id,donation)
 
         call.enqueue(object : Callback<DonationWrapper> {
             override fun onResponse(call: Call<DonationWrapper>,
