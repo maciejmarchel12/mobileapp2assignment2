@@ -13,6 +13,7 @@ import androidx.navigation.fragment.navArgs
 import com.example.historicallandmarkdonation.databinding.FragmentDonationDetailBinding
 import com.example.historicallandmarkdonation.ui.auth.LoggedInViewModel
 import com.example.historicallandmarkdonation.ui.report.ReportViewModel
+import timber.log.Timber
 
 class DonationDetailFragment : Fragment() {
 
@@ -33,31 +34,31 @@ class DonationDetailFragment : Fragment() {
         detailViewModel.observableDonation.observe(viewLifecycleOwner, Observer { render() })
 
         fragBinding.editDonationButton.setOnClickListener {
-            detailViewModel.updateDonation(loggedInViewModel.liveFirebaseUser.value?.email!!,
+            detailViewModel.updateDonation(loggedInViewModel.liveFirebaseUser.value?.uid!!,
                 args.donationid, fragBinding.donationvm?.observableDonation!!.value!!)
             findNavController().navigateUp()
         }
 
         fragBinding.deleteDonationButton.setOnClickListener {
             reportViewModel.delete(loggedInViewModel.liveFirebaseUser.value?.email!!,
-                detailViewModel.observableDonation.value?._id!!)
+                detailViewModel.observableDonation.value?.uid!!)
             findNavController().navigateUp()
         }
 
         return root
     }
 
-    private fun render(/*donation: DonationModel*/) {
-        // fragBinding.editAmount.setText(donation.amount.toString())
-        // fragBinding.editPaymenttype.text = donation.paymentmethod
+    private fun render() {
         fragBinding.editMessage.setText("A Message")
         fragBinding.editUpvotes.setText("0")
         fragBinding.donationvm = detailViewModel
+        Timber.i("Retrofit fragBinding.donationvm == $fragBinding.donationvm")
     }
 
     override fun onResume() {
         super.onResume()
-        detailViewModel.getDonation(loggedInViewModel.liveFirebaseUser.value?.email!!, args.donationid)
+        detailViewModel.getDonation(loggedInViewModel.liveFirebaseUser.value?.uid!!,
+            args.donationid)
 
     }
 

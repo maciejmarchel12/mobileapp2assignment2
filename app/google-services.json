@@ -1,6 +1,7 @@
 {
   "project_info": {
     "project_number": "466746660887",
+    "firebase_url": "https://historicallandmarkdonation-default-rtdb.europe-west1.firebasedatabase.app",
     "project_id": "historicallandmarkdonation",
     "storage_bucket": "historicallandmarkdonation.appspot.com"
   },
