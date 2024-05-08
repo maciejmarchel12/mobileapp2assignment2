@@ -13,7 +13,20 @@
           "package_name": "com.example.historicallandmarkdonation"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "466746660887-6n1vs4f9j1lkcafvh023dn9bd6to1lin.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.historicallandmarkdonation",
+            "certificate_hash": "01fae996fe85793e1ecf1550edd0f59d954d5177"
+          }
+        },
+        {
+          "client_id": "466746660887-m2suh1dbd7q3k83ism18hdv3c29n5qcv.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyAGcnz6tjFcA9Tiu343kARd6tjmb0QACVM"
@@ -21,7 +34,12 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "466746660887-2jaajbbl9rmgjigba4vul5bqu807e06m.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         }
       }
     }

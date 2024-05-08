@@ -16,7 +16,25 @@ object FirebaseDBManager : DonationStore {
     var database: DatabaseReference = FirebaseDatabase.getInstance().reference
 
     override fun findAll(donationsList: MutableLiveData<List<DonationModel>>) {
-        TODO("Not yet implemented")
+        database.child("donations")
+            .addValueEventListener(object : ValueEventListener {
+                override fun onCancelled(error: DatabaseError) {
+                    Timber.i("Firebase Donation error : ${error.message}")
+                }
+
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    val localList = ArrayList<DonationModel>()
+                    val children = snapshot.children
+                    children.forEach {
+                        val donation = it.getValue(DonationModel::class.java)
+                        localList.add(donation!!)
+                    }
+                    database.child("donations")
+                        .removeEventListener(this)
+
+                    donationsList.value = localList
+                }
+            })
     }
 
     override fun findAll(userid: String, donationsList: MutableLiveData<List<DonationModel>>) {
@@ -90,5 +108,26 @@ object FirebaseDBManager : DonationStore {
         childUpdate["user-donations/$userid/$donationid"] = donationValues
 
         database.updateChildren(childUpdate)
+    }
+
+    fun updateImageRef(userid: String,imageUri: String) {
+
+        val userDonations = database.child("user-donations").child(userid)
+        val allDonations = database.child("donations")
+
+        userDonations.addListenerForSingleValueEvent(
+            object : ValueEventListener {
+                override fun onCancelled(error: DatabaseError) {}
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    snapshot.children.forEach {
+                        //Update Users imageUri
+                        it.ref.child("profilepic").setValue(imageUri)
+                        //Update all donations that match 'it'
+                        val donation = it.getValue(DonationModel::class.java)
+                        allDonations.child(donation!!.uid!!)
+                            .child("profilepic").setValue(imageUri)
+                    }
+                }
+            })
     }
 }
