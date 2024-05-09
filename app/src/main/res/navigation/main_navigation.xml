@@ -49,4 +49,13 @@
             android:name="donationid"
             app:argType="string" />
     </fragment>
+    <fragment
+        android:id="@+id/mapsFragment"
+        android:name="com.example.historicallandmarkdonation.ui.map.MapsFragment"
+        android:label="Donation Map"
+        tools:layout="@layout/fragment_maps" >
+        <action
+            android:id="@+id/action_mapsFragment_to_donationDetailFragment"
+            app:destination="@id/donationDetailFragment" />
+    </fragment>
 </navigation>
