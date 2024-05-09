@@ -21,6 +21,7 @@ import com.example.historicallandmarkdonation.R
 import com.example.historicallandmarkdonation.databinding.FragmentDonateBinding
 import com.example.historicallandmarkdonation.models.DonationModel
 import com.example.historicallandmarkdonation.ui.auth.LoggedInViewModel
+import com.example.historicallandmarkdonation.ui.map.MapsViewModel
 import com.example.historicallandmarkdonation.ui.report.ReportViewModel
 
 class DonateFragment : Fragment() {
@@ -32,6 +33,7 @@ class DonateFragment : Fragment() {
     private lateinit var donateViewModel: DonateViewModel
     private val reportViewModel: ReportViewModel by activityViewModels()
     private val loggedInViewModel : LoggedInViewModel by activityViewModels()
+    private val mapsViewModel: MapsViewModel by activityViewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -85,7 +87,9 @@ class DonateFragment : Fragment() {
                 layout.progressBar.progress = totalDonated
                 donateViewModel.addDonation(loggedInViewModel.liveFirebaseUser,
                     DonationModel(paymentmethod = paymentmethod,amount = amount,
-                        email = loggedInViewModel.liveFirebaseUser.value?.email!!)) }
+                        email = loggedInViewModel.liveFirebaseUser.value?.email!!,
+                        latitude = mapsViewModel.currentLocation.value!!.latitude,
+                        longitude = mapsViewModel.currentLocation.value!!.longitude)) }
         }
     }
 

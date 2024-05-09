@@ -1,12 +1,15 @@
 package com.example.historicallandmarkdonation.ui.home
 
+import android.annotation.SuppressLint
 import android.content.Intent
+import android.location.Location
 import android.net.Uri
 import android.os.Bundle
 import android.view.MenuItem
 import android.view.View
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.drawerlayout.widget.DrawerLayout
@@ -23,6 +26,9 @@ import com.example.historicallandmarkdonation.databinding.NavHeaderBinding
 import com.example.historicallandmarkdonation.firebase.FirebaseImageManager
 import com.example.historicallandmarkdonation.ui.auth.LoggedInViewModel
 import com.example.historicallandmarkdonation.ui.auth.Login
+import com.example.historicallandmarkdonation.ui.map.MapsViewModel
+import com.example.historicallandmarkdonation.utils.checkLocationPermissions
+import com.example.historicallandmarkdonation.utils.isPermissionGranted
 import com.example.historicallandmarkdonation.utils.readImageUri
 import com.example.historicallandmarkdonation.utils.showImagePicker
 import com.google.firebase.auth.FirebaseUser
@@ -37,6 +43,7 @@ class Home : AppCompatActivity() {
     private lateinit var loggedInViewModel : LoggedInViewModel
     private lateinit var headerView : View
     private lateinit var intentLauncher : ActivityResultLauncher<Intent>
+    private val mapsViewModel : MapsViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -53,12 +60,16 @@ class Home : AppCompatActivity() {
         // menu should be considered as top level destinations.
 
         appBarConfiguration = AppBarConfiguration(setOf(
-            R.id.donateFragment, R.id.reportFragment, R.id.aboutFragment), drawerLayout)
+            R.id.donateFragment, R.id.reportFragment, R.id.mapsFragment, R.id.aboutFragment), drawerLayout)
         setupActionBarWithNavController(navController, appBarConfiguration)
 
         val navView = homeBinding.navView
         navView.setupWithNavController(navController)
         initNavHeader()
+
+        if(checkLocationPermissions(this)) {
+            mapsViewModel.updateCurrentLocation()
+        }
     }
 
     public override fun onStart() {
@@ -148,6 +159,21 @@ class Home : AppCompatActivity() {
                     RESULT_CANCELED -> { } else -> { }
                 }
             }
+    }
+
+    @SuppressLint("MissingPermission")
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        if (isPermissionGranted(requestCode, grantResults))
+            mapsViewModel.updateCurrentLocation()
+        else {
+            // permissions denied, so use a default location
+            mapsViewModel.currentLocation.value = Location("Default").apply {
+                latitude = 52.245696
+                longitude = -7.139102
+            }
+        }
+        Timber.i("LOC : %s", mapsViewModel.currentLocation.value)
     }
 
 }

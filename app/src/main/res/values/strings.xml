@@ -45,6 +45,8 @@
 
     <string name="select_profile_image">Select Profile Image</string>
 
+    <string name="action_location">Location</string>
+
     <!-- START Firebase Resources-->
 
     <string name="label_emailpassword">Email/Password Authentication</string>
