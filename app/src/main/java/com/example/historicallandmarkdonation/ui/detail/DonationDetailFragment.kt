@@ -10,6 +10,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import com.example.historicallandmarkdonation.R
 import com.example.historicallandmarkdonation.databinding.FragmentDonationDetailBinding
 import com.example.historicallandmarkdonation.ui.auth.LoggedInViewModel
 import com.example.historicallandmarkdonation.ui.report.ReportViewModel
@@ -50,6 +51,7 @@ class DonationDetailFragment : Fragment() {
 
     private fun render() {
         fragBinding.editMessage.setText("A Message")
+        fragBinding.editCause.setText("A Cause")
         fragBinding.editUpvotes.setText("0")
         fragBinding.donationvm = detailViewModel
         Timber.i("Retrofit fragBinding.donationvm == $fragBinding.donationvm")
@@ -65,5 +67,25 @@ class DonationDetailFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _fragBinding = null
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        applyItemAnimations()
+    }
+
+    private fun applyItemAnimations() {
+        // Sets the custom animations for fragment transactions
+        val transaction = requireActivity().supportFragmentManager.beginTransaction()
+        transaction.setCustomAnimations(R.anim.slide_in_left, R.anim.slide_out_right)
+
+        // Replaces the current fragment with itself (no actual change, but it triggers the animation)
+        transaction.replace(id, this)
+
+        // Adds the transaction to the back stack
+        transaction.addToBackStack(null)
+
+        // Commits the transaction
+        transaction.commit()
     }
 }

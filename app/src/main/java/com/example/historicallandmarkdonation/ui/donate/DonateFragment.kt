@@ -23,6 +23,7 @@ import com.example.historicallandmarkdonation.models.DonationModel
 import com.example.historicallandmarkdonation.ui.auth.LoggedInViewModel
 import com.example.historicallandmarkdonation.ui.map.MapsViewModel
 import com.example.historicallandmarkdonation.ui.report.ReportViewModel
+import com.google.firebase.auth.FirebaseAuth
 
 class DonateFragment : Fragment() {
 
@@ -58,6 +59,11 @@ class DonateFragment : Fragment() {
             fragBinding.paymentAmount.setText("$newVal")
         }
         setButtonListener(fragBinding)
+
+        val currentUser = FirebaseAuth.getInstance().currentUser
+        val userEmail = currentUser?.email ?: "User"
+        val welcomeMessage = getString(R.string.donateTitle, userEmail)
+        fragBinding.donateTitle.text = welcomeMessage
 
         return root;
     }
