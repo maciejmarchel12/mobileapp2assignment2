@@ -2,8 +2,10 @@ package com.example.historicallandmarkdonation.adapters
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.view.animation.AnimationUtils
 import androidx.core.net.toUri
 import androidx.recyclerview.widget.RecyclerView
+import com.example.historicallandmarkdonation.R
 import com.example.historicallandmarkdonation.databinding.CardDonationBinding
 import com.example.historicallandmarkdonation.models.DonationModel
 import com.example.historicallandmarkdonation.utils.customTransformation
@@ -27,12 +29,40 @@ class DonationAdapter constructor(private var donations: ArrayList<DonationModel
 
     override fun onBindViewHolder(holder: MainHolder, position: Int) {
         val donation = donations[holder.adapterPosition]
+
+        val animation = AnimationUtils.loadAnimation(holder.itemView.context, R.anim.slide_in_bottom)
+        holder.itemView.startAnimation(animation)
+
         holder.bind(donation,listener)
+    }
+
+    override fun onViewDetachedFromWindow(holder: MainHolder) {
+        super.onViewDetachedFromWindow(holder)
+        // Resets the animation when view is detached
+        holder.itemView.clearAnimation()
     }
 
     fun removeAt(position: Int) {
         donations.removeAt(position)
         notifyItemRemoved(position)
+    }
+
+    fun filter(query: String?) {
+        query?.let { searchText ->
+            val filteredList = if (searchText.isEmpty()) {
+                ArrayList(donations) // returns original list if query is empty
+            } else {
+                donations.filter { donation ->
+                    // Filter by email, amount, or payment method
+                    donation.email?.contains(searchText, ignoreCase = true) ?: false ||
+                            donation.amount?.toString()?.contains(searchText, ignoreCase = true) ?: false ||
+                            donation.paymentmethod?.contains(searchText, ignoreCase = true) ?: false
+                } as ArrayList<DonationModel>
+            }
+            donations.clear()
+            donations.addAll(filteredList)
+            notifyDataSetChanged()
+        }
     }
 
     override fun getItemCount(): Int = donations.size

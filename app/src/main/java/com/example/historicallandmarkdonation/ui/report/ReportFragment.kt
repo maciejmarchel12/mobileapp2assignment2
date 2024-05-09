@@ -8,6 +8,7 @@ import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
+import android.widget.SearchView
 import androidx.appcompat.widget.SwitchCompat
 import androidx.core.view.MenuHost
 import androidx.core.view.MenuProvider
@@ -40,6 +41,7 @@ class ReportFragment : Fragment(), DonationClickListener {
     lateinit var loader : AlertDialog
     private val reportViewModel: ReportViewModel by activityViewModels()
     private val loggedInViewModel : LoggedInViewModel by activityViewModels()
+    private lateinit var donationAdapter: DonationAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -92,9 +94,12 @@ class ReportFragment : Fragment(), DonationClickListener {
         val itemTouchEditHelper = ItemTouchHelper(swipeEditHandler)
         itemTouchEditHelper.attachToRecyclerView(fragBinding.recyclerView)
 
+        donationAdapter = DonationAdapter(ArrayList(), this, reportViewModel.readOnly.value!!)
+
+        render(ArrayList())
+
         return root
     }
-
 
     private fun setupMenu() {
         (requireActivity() as MenuHost).addMenuProvider(object : MenuProvider {
@@ -114,6 +119,21 @@ class ReportFragment : Fragment(), DonationClickListener {
                     if (isChecked) reportViewModel.loadAll()
                     else reportViewModel.load()
                 }
+
+                //Added search functionality
+                val searchItem = menu.findItem(R.id.app_bar_search)
+                val searchView = searchItem.actionView as SearchView
+
+                searchView.setOnQueryTextListener(object: SearchView.OnQueryTextListener {
+                    override fun onQueryTextSubmit(query: String?): Boolean {
+                        return false
+                    }
+
+                    override fun onQueryTextChange(newText: String?): Boolean {
+                        donationAdapter.filter(newText)
+                        return true
+                    }
+                })
             }
 
             override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
@@ -125,7 +145,8 @@ class ReportFragment : Fragment(), DonationClickListener {
     }
 
     private fun render(donationsList: ArrayList<DonationModel>) {
-        fragBinding.recyclerView.adapter = DonationAdapter(donationsList,this, reportViewModel.readOnly.value!!)
+        donationAdapter = DonationAdapter(donationsList,this, reportViewModel.readOnly.value!!)
+        fragBinding.recyclerView.adapter = donationAdapter
         if (donationsList.isEmpty()) {
             fragBinding.recyclerView.visibility = View.GONE
             fragBinding.donationsNotFound.visibility = View.VISIBLE
@@ -172,5 +193,25 @@ class ReportFragment : Fragment(), DonationClickListener {
     override fun onDestroyView() {
         super.onDestroyView()
         _fragBinding = null
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        applyItemAnimations()
+    }
+
+    private fun applyItemAnimations() {
+        // Sets the custom animations for fragment transactions
+        val transaction = requireActivity().supportFragmentManager.beginTransaction()
+        transaction.setCustomAnimations(R.anim.slide_in_left, R.anim.slide_out_right)
+
+        // Replaces the current fragment with itself (no actual change, but it triggers the animation)
+        transaction.replace(id, this)
+
+        // Adds the transaction to the back stack
+        transaction.addToBackStack(null)
+
+        // Commits the transaction
+        transaction.commit()
     }
 }

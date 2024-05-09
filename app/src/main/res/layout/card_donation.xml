@@ -82,6 +82,18 @@
                 android:textColor="@color/color_primary"
                 tools:text="message" />
 
+            <TextView
+                android:id="@+id/cause"
+                android:layout_width="190dp"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/message"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="5dp"
+                android:layout_toEndOf="@+id/imageIcon"
+                android:text="@{donation.cause}"
+                android:textColor="@color/color_primary"
+                tools:text="cause" />
+
         </RelativeLayout>
     </androidx.cardview.widget.CardView>
 </layout>

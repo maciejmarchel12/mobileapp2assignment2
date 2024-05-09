@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name">Historical Landmark Donation</string>
-    <string name="donateTitle">Welcome Homer</string>
+    <string name="donateTitle">Welcome %1$s</string>
     <string name="donateSubtitle">Please Give Generously</string>
     <string name="donateButton">Donate</string>
     <string name="paypal">PayPal</string>
@@ -12,6 +12,8 @@
     <string name="defaultAmount">00</string>
     <string name="defaultMethod">N/A</string>
     <string name="enter_amount">Enter Amount</string>
+    <string name="enter_cause">Enter Cause</string>
+    <string name="enter_message">Enter Message</string>
     <string name="action_donate">Donate</string>
     <string name="action_report">Report</string>
 
@@ -21,13 +23,13 @@
     <string name="action_send">Send</string>
     <string name="group_communicate">Communicate</string>
 
-    <string name="nav_header_title">DonationX (Lab)</string>
-    <string name="nav_header_subtitle">voteforhomer@android.com</string>
+    <string name="nav_header_title">Historical Landmarks</string>
+    <string name="nav_header_subtitle">supportHL@android.com</string>
     <string name="nav_header_desc">Navigation header</string>
 
     <string name="action_about">About Us</string>
-    <string name="aboutus_title">Homer for President !!</string>
-    <string name="aboutus_message">Hi, I\'m Homer\n\nPlease vote for me.\n\n Please Please Please Please!!</string>
+    <string name="aboutus_title">Donate to Historical Landmarks!</string>
+    <string name="aboutus_message">Hi, We are Historical Landmarks.\n\nPlease support us by donating.\n\n Thank you! It means a lot to us</string>
 
     <string name="donationsNotFound">No Donations Yet…\nGo Make a Donation!</string>
     <string name="donationError">Error : Couldn\'t Make a Donation…</string>
@@ -36,6 +38,7 @@
     <string name="amt">Amount :</string>
     <string name="payment">Payment :</string>
     <string name="message">Message :</string>
+    <string name="cause">Cause :</string>
     <string name="upvotes">UpVotes :</string>
 
     <string name="messageLoading">Please Wait while the Donations are Loading...</string>

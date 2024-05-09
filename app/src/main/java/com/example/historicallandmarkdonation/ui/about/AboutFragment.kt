@@ -27,4 +27,24 @@ class AboutFragment : Fragment() {
         })
         return root
     }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        applyItemAnimations()
+    }
+
+    private fun applyItemAnimations() {
+        // Sets the custom animations for fragment transactions
+        val transaction = requireActivity().supportFragmentManager.beginTransaction()
+        transaction.setCustomAnimations(R.anim.slide_in_left, R.anim.slide_out_right)
+
+        // Replaces the current fragment with itself (no actual change, but it triggers the animation)
+        transaction.replace(id, this)
+
+        // Adds the transaction to the back stack
+        transaction.addToBackStack(null)
+
+        // Commits the transaction
+        transaction.commit()
+    }
 }

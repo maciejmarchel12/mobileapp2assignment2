@@ -26,6 +26,7 @@ class Login : AppCompatActivity() {
 
     public override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        overridePendingTransition(R.anim.slide_in_left,R.anim.slide_out_right)
         loginBinding = LoginBinding.inflate(layoutInflater)
         setContentView(loginBinding.root)
 
