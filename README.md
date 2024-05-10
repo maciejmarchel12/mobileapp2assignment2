@@ -10,13 +10,17 @@ The user begins their interaction with the application by landing on the login s
 or to create a new one by either directly creating a new account or using Google Sign-in. After that the user lands on the report view where you can see the donations made,
 on this view if any donations already exist the user can see their own ones but if they toggle the switch at the header they are able to view other user donations as well.
 On the header as well there is a search bar allowing the user to search for donations by amount, email and payment method. The user can swipe left to delete a donation on this
-view or swipe right or tap on the donation to edit it. From the header the user can also open a navigation menu to use to visit other views of the application such as donation
+view or swipe right or tap on the donation to edit it.
+
+From the header the user can also open a navigation menu to use to visit other views of the application such as donation
 which brings the user to the donation view and allows them to create a new donation. First thing that is displayed is a welcome (user) message that dynamically checks for which
 user is logged in currently and displays their email next to the welcome message. This view also consists of a scrolling amount picker that a user can use to quickly input the
 amount they wish to donate or they can manually input the value into the amount field. A user can choose either direct or paypal payment type. A user can also write a message
 and to also dedicate the donation to a cause by filling the relevant field for it. The donation view also displays the Total amount so far and a progress bar that fills up when
 donating. Using the navigation menu again the user can visit the about section of the application that just displays a message what the application is about and displays a little
-knight image to accompany the theme of the application. Going back to the navigation menu the user can also visit the location view which is a google maps integration with the
+knight image to accompany the theme of the application.
+
+Going back to the navigation menu the user can also visit the location view which is a google maps integration with the
 application that lets the user see where the donations come from and displays them on the map, the switch filter to show all donations also works here. The navigation menu features
 all the necessary connection to these views but also features the option to sign out of the account which returns the user to the log in screen, the navigation menu also lets the user
 see their profile details such as email and profile picture on the header of the navigation menu. Tapping the profile picture lets the user change their profile picture from the devices
