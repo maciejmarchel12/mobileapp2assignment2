@@ -15,7 +15,9 @@ view or swipe right or tap on the donation to edit it.
 From the header the user can also open a navigation menu to use to visit other views of the application such as donation
 which brings the user to the donation view and allows them to create a new donation. First thing that is displayed is a welcome (user) message that dynamically checks for which
 user is logged in currently and displays their email next to the welcome message. This view also consists of a scrolling amount picker that a user can use to quickly input the
-amount they wish to donate or they can manually input the value into the amount field. A user can choose either direct or paypal payment type. A user can also write a message
+amount they wish to donate or they can manually input the value into the amount field. 
+
+A user can choose either direct or paypal payment type. A user can also write a message
 and to also dedicate the donation to a cause by filling the relevant field for it. The donation view also displays the Total amount so far and a progress bar that fills up when
 donating. Using the navigation menu again the user can visit the about section of the application that just displays a message what the application is about and displays a little
 knight image to accompany the theme of the application.
