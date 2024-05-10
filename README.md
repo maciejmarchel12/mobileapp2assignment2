@@ -58,9 +58,9 @@ and accessing location-based service. Google maps is used in this application to
 
 ## UML
 
-![UML Diagram](https://drive.google.com/file/d/1VkqJsZp2leXt8ya-aO11-_wkCVenqoAE/view?usp=sharing)
+UML: (https://drive.google.com/file/d/1VkqJsZp2leXt8ya-aO11-_wkCVenqoAE/view?usp=sharing)
 
-![Application Case](https://drive.google.com/file/d/16QhhtjDgHBMWXBlTIRGJlSGRQfLgaEC3/view?usp=sharing)
+Application: (https://drive.google.com/file/d/16QhhtjDgHBMWXBlTIRGJlSGRQfLgaEC3/view?usp=sharing)
 
 ## UX/DX Approach
 
